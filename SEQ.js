@@ -119,12 +119,12 @@ var SEQ = (function(){
             var arr = [],
                 l = polynomials.length;
             for(var i=0; i<l; i++) {
-                arr.push(f(polynomials[i]));
+                arr.push(f(polynomials[i], i, i===l-1));
             }
             return arr;
         },
         toPolynomialString: function() {
-            var poly_array = this.eachPolynomial(function(p_array) {
+            var poly_array = this.eachPolynomial(function(p_array, index, last) {
                 //get the coefficient
                 var c = Math.abs(p_array[0]),
                     //get the power
@@ -134,7 +134,7 @@ var SEQ = (function(){
                     //remove the variable for zero powers
                     v = p === 0 ? '' : variable;
                 //get rid of a one coefficient
-                if(c === 1) c = '';
+                if(c === 1 && !last) c = '';
                 //place the multiplication sign
                 if(p !==0 && c !== '') c = c+'*';
                 //get rid of one as power

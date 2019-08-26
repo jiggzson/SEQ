@@ -6,12 +6,12 @@ I use the function generate to create a a sequence
 
 ```javascript
 //this sequence was generated using x^3+7*x+7
-var number_sequence = [ 15, 29, 55, 99, 167, 265, 399, 575, 799, 1077 ];
+var number_sequence = [ 7, 15, 29, 55, 99, 167, 265, 399, 575, 799, 1077 ];
 ```
 We can then analyze it using SEQ
 
 ```javascript
-var seq = SEQ.analyze(number_sequence);
+var seq = new SEQ(number_sequence).analyze();
 console.log(seq.toPolynomialString())
 //x^3+7*x+7
 ```

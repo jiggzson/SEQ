@@ -32,3 +32,5 @@ console.log(f(7));
 You can tweak the tolerance and maximum iterations and the variable used when returning the polynomial string
 using the 'setTolerance', 'setMaxIterations', and 'setVariable' methods. The default for 'setMaxIterations' 
 is 1000 which roughly corresponds to highest degree polynomial expected.
+
+It cannot calculate all sequence yet.

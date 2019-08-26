@@ -1,3 +1,10 @@
+/*
+ * Author : Martin Donk
+ * Website : http://www.nerdamer.com
+ * Email : martin.r.donk@gmail.com
+ * Source : https://github.com/jiggzson/nerdamer
+ */
+
 var SEQ = (function() {
     
     /**
@@ -86,6 +93,15 @@ var SEQ = (function() {
         this.tolerance = 1e-3;
     }
     
+    Sequence.generate = function(callback, n) {
+        n = n || 10;
+        var sequence = [];
+        for(var i=0; i<n; i++) {
+            sequence.push(callback.call(undefined, i));
+        }
+        return sequence;
+    };
+    
     /**
      * Calcuates the polynomial given a sequence
      * @returns {Sequence}
@@ -138,6 +154,7 @@ var SEQ = (function() {
             for(var i=0; i<l; i++) {
                 next_seq.push(number_sequence[i] - coeff*Math.pow(i+1, pow));
             }
+            
             //record the  polynomial
             if(coeff !== 0) 
                 this.terms[pow] = coeff;
@@ -307,14 +324,14 @@ var SEQ = (function() {
                 //add the plus for positve terms not being first or last
                 else if(e > 0)
                     retval = '+'+e;
-                else
+                else 
                     retval = e;
             }
             else {
                 //prepare the coefficient
                 if(e === 1) {
                     //the one is implied
-                    coeff = '';
+                    coeff = i === last ? '' : '+';
                 }
                 else if(e === -1)
                     //just the sign is needed
@@ -474,3 +491,7 @@ var SEQ = (function() {
     return Sequence;
     
 })();
+
+if ((typeof module) !== 'undefined') {
+    module.exports = SEQ;
+}

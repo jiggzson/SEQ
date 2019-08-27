@@ -1,8 +1,8 @@
 /*
  * Author : Martin Donk
- * Website : http://www.nerdamer.com
+ * Website : https://github.com/jiggzson/SEQ
  * Email : martin.r.donk@gmail.com
- * Source : https://github.com/jiggzson/nerdamer
+ * Source : https://github.com/jiggzson/SEQ
  */
 
 var SEQ = (function() {
@@ -29,7 +29,7 @@ var SEQ = (function() {
      * @returns {Number}
      */
     function round(x, s) { 
-        s = s || 11;
+        s = s || 1;
         return Math.round( x*Math.pow( 10,s ) )/Math.pow( 10,s );
     }
 
@@ -91,6 +91,9 @@ var SEQ = (function() {
         
         //set the maximum allowable tolerance
         this.tolerance = 1e-3;
+        
+        //set the significant figures
+        this.sig_figs = 16;
     }
     
     Sequence.generate = function(callback, n) {
@@ -136,8 +139,9 @@ var SEQ = (function() {
                     slope = diff_avgs/seq_avgs;
 
                 seq = diffs; //use the differences for the next iteration
-                if(iter > this.max_iter) 
+                if(iter > this.max_iter) {
                     stop();
+                }
                 iter++; 
             } 
             while(slope >= this.tolerance);
@@ -145,12 +149,15 @@ var SEQ = (function() {
             //the power of that polynomial is the number of layers minus the original layer
             var pow = iter-1,
                 //get the coefficient
-                coeff = round(seq_avgs/factorial(pow)),
+                coeff = seq_avgs/factorial(pow),
                 //prepare the next sequence
                 next_seq = [],
                 //if the slope of the current polynomial is negative then we're not done and 
                 //must find others
                 neg_slope = (iter > 0 && seq_avgs < 0);
+                //round the coefficient
+                coeff = round(coeff, this.sig_figs);
+                
             for(var i=0; i<l; i++) {
                 next_seq.push(number_sequence[i] - coeff*Math.pow(i+1, pow));
             }
@@ -165,8 +172,9 @@ var SEQ = (function() {
             //reset the iterator
             iter = 0;
             outer_iter++;
-            if(outer_iter > this.max_iter) 
+            if(outer_iter > this.max_iter) {
                 stop();
+            }
         }
         while(seq_avgs >= this.tolerance || neg_slope)
         
@@ -215,6 +223,7 @@ var SEQ = (function() {
         seq.max_iter = this.max_iter;
         seq.variable = this.variable;
         seq.tolerance = this.tolerance;
+        seq.sig_figs = this.sig_figs;
         
         return seq;
     };
@@ -487,6 +496,17 @@ var SEQ = (function() {
         
         return this;
     };
+    
+    /**
+     * The significant figures to round to while calculating the polynomial
+     * @param {Number} d
+     * @returns {Sequence}
+     */
+    Sequence.prototype.setRoundSigFigs = function(d) {
+        this.sig_figs = d;
+        
+        return this;
+    }
     
     return Sequence;
     

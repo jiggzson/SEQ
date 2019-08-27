@@ -21,6 +21,9 @@ describe('Basic tests for univariate', function() {
     it('Should calculate the sequence correctly for seventh order sequences', function() {
         expect(new SEQ(SEQ.generate(x => 5*x**7+2*x**2+1)).analyze().toPolynomialString()).toEqual('5x^7+2x^2+1');
     }); 
+    it('Should calculate the sequence correctly for linear polynomial with pi', function() {
+        expect(new SEQ(SEQ.generate(x => 2*x+Math.PI)).analyze().toPolynomialString()).toEqual('2x+3.141592653589793');
+    }); 
    
     
 });

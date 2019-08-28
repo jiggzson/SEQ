@@ -1,5 +1,5 @@
 # SEQ
-Convert number sequence to polynomial form 
+Convert number sequence to polynomial form using method of finite differences
 
 Example:
 I use the function generate to create a a sequence
@@ -33,4 +33,4 @@ You can tweak the tolerance and maximum iterations and the variable used when re
 using the 'setTolerance', 'setMaxIterations', and 'setVariable' methods. The default for 'setMaxIterations' 
 is 1000 which roughly corresponds to highest degree polynomial expected.
 
-It cannot calculate all sequence yet.
+It cannot calculate all sequences yet.
